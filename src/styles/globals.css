@@ -1,0 +1,230 @@
+@import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
+
+:root {
+  --background: #F4F7FF;
+  --foreground: #171717;
+  --font-sans: 'Roboto', sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --tracking-1: 0em;
+  --tracking-2: 0.025em;
+  --tracking-3: 0.05em;
+  --tracking-4: 0.1em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family:var(--font-sans);
+}
+@keyframes slideUpSequential {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  opacity: 0;
+  animation: slideUpSequential 0.5s ease-out forwards;
+}
+.btn{
+
+padding:0;
+
+width: 250px;
+text-align: center;
+background: linear-gradient(135deg, #FF692E 0%, #8D5CF6 100%);
+border-radius: 46px;
+font-family:var(--font-sans);
+font-weight: 700;
+font-size: 20px;
+line-height: 58px;
+
+
+
+letter-spacing: 0.02em;
+
+color: #FFFFFF;
+
+
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 3s ease infinite;
+}
+.hero-typo {
+  font-size: 54px;
+  line-height: 120%;
+  font-weight: 900;
+  color: #0A0D14;
+  padding-bottom: 15px;
+}
+.hero p{
+  font-size: 20px;
+  color: #0A0D14;
+  line-height: 150%;
+  font-weight:normal;
+  letter-spacing: 0.7px;
+  padding-bottom: 20px;
+}
+.font-16 {
+  font-size: 16px;
+  letter-spacing: 6px;
+}
+
+.card-glow {
+  box-shadow:
+    0 0 30px rgba(255,255,255,0.05),
+    inset 0 0 20px rgba(255,255,255,0.05);
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  width: max-content;
+  animation: marqueeScroll var(--speed, 20s) linear infinite;
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes starPulse {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.3) rotate(12deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.input-border {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #E54500 0%, #8D5CF6 100%);
+  transition: width 0.35s ease;
+}
+
+.subscribe-btn {
+  position: relative;
+  padding: 17px 27px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: transparent;
+  border-radius: 66px;
+  cursor: pointer;
+  z-index: 1;
+transition: background 0.4s ease;
+}
+
+.subscribe-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* border thickness */
+  background: linear-gradient(90deg, #E54500 0%, #8D5CF6 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.subscribe-btn:hover {
+  background-image: 
+    linear-gradient(90deg, #E54500 0%, #8D5CF6 100%),
+    linear-gradient(90deg, #E54500 0%, #8D5CF6 100%);
+  color: white;
+}
+.pastel-gradient-bg {
+background-image: url('/background.png'); /* Use the path relative to the public folder */
+  background-size: cover;      /* Ensures the image covers the entire div responsively */
+  background-position: center; /* Centers the image content */
+  background-repeat: no-repeat;
+}
+
+
+.gradient-border-wrapper {
+  position: relative;
+  display: inline-block;
+  border-radius: 56px;
+  padding: 0;
+  top: -8px;
+}
+
+.getStartedBtn {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  color: #000;
+  font-weight: 700;
+  font-size: 20px;
+  border: none;
+  border-radius: 54px;
+  padding: 14px 37px;
+  box-shadow: none;
+  cursor: pointer;
+ transition: all 0.3s ease;
+}
+
+.gradient-border-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 56px;
+  padding: 2px; /* thickness of border */
+  background: linear-gradient(90deg, #E54500 0%, #8D5CF6 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+.gradient-border-wrapper:hover .getStartedBtn {
+ transform: scale(1.1);
+}
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
