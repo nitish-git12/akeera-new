@@ -60,7 +60,7 @@ export default function AnimatedBadge({
           ease: [0.34, 1.56, 0.64, 1]
         }}
       >
-       <Image src="./arrow-icon1.svg" width={13} height={12} /> 
+       <Image src="./arrow-icon1.svg" width={13} height={12} alt='' /> 
       </motion.div>
       <motion.span style={{fontSize:'16px', textTransform:'uppercase', fontWeight:'bold'}}
         initial={{ opacity: 0, x: -10 }}

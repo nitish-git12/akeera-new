@@ -12,8 +12,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --tracking-1: 0em;
   --tracking-2: 0.025em;
   --tracking-3: 0.05em;

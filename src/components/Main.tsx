@@ -8,6 +8,7 @@ import AnimatedBadge from '../components/AnimatedBadge';
 import HowItWorks from "./HowItWorks";
 import FeaturesAccordion from "./FeaturesAccordion";
 import TestimonialsSection from "./TestimonialsSection";
+import BottomCard from "./BottomCard";
 
 const Main = () => {
      const fadeUp = {
@@ -251,39 +252,14 @@ Results you can feel.</h2>
       </div>
     </section>
     <TestimonialsSection />
-    <div className="w-full">
-    <div className="max-w-6xl mx-auto">
-    <div className="rounded-[20px] w-full pastel-gradient-bg flex items-center justify-center px-6 py-16 mb-25 sm:px-8 lg:px-12">
-      <div className="max-w-4xl w-full text-center">
-        {/* Main Heading */}
-        <h2 className="text-[48px] font-semibold text-black mb-4 sm:mb-6 leading-tight tracking-tight">
-          Ready to grow your hospital the smart way?
-        </h2>
-        
-        {/* Subheading */}
-        <div className="text-[20px] text-black mb-8 sm:mb-8 leading-relaxed">
-          <p className="mb-0.5">MedQR isn't just software it's your growth partner.</p>
-          <p>Automate, streamline, and scale with confidence.</p>
-        </div>
-        
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-1">
-          {/* Book a Demo Button */}
-           <div style={outerWrapper}>
-            <div style={backgroundLayer}></div>
-      <button style={buttonStyle} onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
-onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}>Book a Demo</button>
-    </div>
-<div className="gradient-border-wrapper">
-  <button className="getStartedBtn">
-    Get Started for Free
-  </button>
-</div>
-        </div>
-        </div>
-      </div>
-    </div>
-    </div>
+  <BottomCard 
+    
+    heading="Ready to grow your hospital the smart way?"
+    paragraph="MedQR isn’t just software it’s your growth partner."
+    paragraph2="Automate, streamline, and scale with confidence."
+    CTA1="Book a Demo"
+    CTA2="Get Started for Free"
+    />
     </div>
   )
 }

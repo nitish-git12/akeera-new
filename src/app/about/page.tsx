@@ -3,9 +3,37 @@ import Image from "next/image";
 import {motion} from 'framer-motion';
 import ScrollReveal, { Typewriter } from '../../components/ScrollReveal';
 import AnimatedBadge from '../../components/AnimatedBadge';
-
+import StatsSection from '../../components/about-us/StatsSection';
+import AnimatedValuesSection from '../../components/about-us/AnimatedValuesSection';
+import { useState, useEffect, useRef } from 'react';
+import TeamSection from '../../components/about-us/TeamShowcase';
+import BottomCard from '../../components/BottomCard';
 
 export default function AboutPage() {
+   const [hasRevealed, setHasRevealed] = useState(false);
+  const sectionRef = useRef(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          // Start the reveal animation
+          setTimeout(() => {
+            setHasRevealed(true);
+          }, 300);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
     return (
         <div className="">
         <div className="max-w-6xl mx-auto px-4 md:px-0">
@@ -201,119 +229,284 @@ export default function AboutPage() {
      
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Values List */}
-          <div className="space-y-8">
-            {/* Human First */}
-            <div className="flex gap-6 items-start pb-8 border-b border-gray-700">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12  flex items-center justify-center">
-                  <Image src='/human.svg' width={50} height={52} alt="" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-[24px] font-bold mb-3 bg-clip-text text-transparent" style={{
-  backgroundImage: "linear-gradient(90deg, #2DB9B1 0%, #006FFF 100% 100%)",
-}}>
-                  Human First
-                </h3>
-                <p className="text-[16px] text-white">
-                  Behind every lab report or hospital visit is a life. We never forget that.
-                </p>
-              </div>
-            </div>
-
-            {/* Innovation with Purpose */}
-            <div className="flex gap-6 items-start pb-8 border-b border-gray-700">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 flex items-center justify-center">
-                   <Image src='/innovation.svg' width={50} height={48} alt="" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-[24px] font-bold text-orange-500 mb-3">
-                  Innovation with Purpose
-                </h3>
-                <p className="text-[16px] text-white md:text-lg">
-                  We create solutions that solve real-world problems, not just add features.
-                </p>
-              </div>
-            </div>
-
-            {/* Trust & Security */}
-            <div className="flex gap-6 items-start pb-8 border-b border-gray-700">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 flex items-center justify-center">
-                  <Image src='/trust.svg' width={50} height={63} alt="" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-2xl md:text-3xl font-bold text-blue-500 mb-3">
-                  Trust & Security
-                </h3>
-                <p className="text-gray-300 text-base md:text-lg">
-                  Data is sacred — we protect it with the highest standards.
-                </p>
-              </div>
-            </div>
-
-            {/* Relentless Simplicity */}
-            <div className="flex gap-6 items-start">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 flex items-center justify-center">
-                  <Image src='/rentless.svg' width={50} height={50} alt="" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-2xl md:text-3xl font-bold text-purple-400 mb-3">
-                  Relentless Simplicity
-                </h3>
-                <p className="text-gray-300 text-base md:text-lg">
-                  If it's not easy, it's not Akeera.
-                </p>
-              </div>
-            </div>
-          </div>
+         <AnimatedValuesSection />
 
           {/* Right Side - Image with Floating Cards */}
-          <div className="relative hidden lg:block">
-            <div className="relative">
-              {/* Main Image Container */}
-              <div className="rounded-2xl overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=700&fit=crop" 
-                  alt="Healthcare professional" 
-                  className="w-full h-[600px] object-cover"
-                />
-              </div>
+       <div ref={sectionRef} className="relative hidden lg:block">
+      <div className="relative">
+        {/* Main Image Container - Hidden initially, revealed when boxes move */}
+        <div 
+          className={`rounded-2xl overflow-hidden transition-all duration-1000 ${
+            hasRevealed 
+              ? 'opacity-100 scale-100' 
+              : 'opacity-0 scale-95'
+          }`}
+          style={{
+            transitionDelay: '400ms',
+          }}
+        >
+          <Image 
+            src="/about-us.svg" 
+            alt="Healthcare professional" 
+            width={0}
+            height={350}
+            className="w-full object-cover"
+          />
+        </div>
 
-              {/* Floating Card - Top Right */}
-              <div className="absolute -top-8 -right-8 w-48 h-32 bg-gray-200 rounded-2xl shadow-xl"></div>
+        {/* Covering Box that splits into 4 parts */}
+        
+        {/* Top Right Box */}
+        <div 
+          className={`absolute bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 rounded-2xl shadow-2xl backdrop-blur-sm transition-all duration-[1800ms] ease-out ${
+            hasRevealed ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{
+            top: hasRevealed ? '-100px' : '0',
+            right: hasRevealed ? '-100px' : '0',
+            width: hasRevealed ? '192px' : '50%',
+            height: hasRevealed ? '128px' : '50%',
+            transitionDelay: '0ms',
+            animation: hasRevealed ? 'floatTopRight 8s ease-in-out infinite' : 'none',
+            animationDelay: '1.8s',
+          }}
+        ></div>
 
-              {/* Floating Card - Top Left (partially visible) */}
-              <div className="absolute top-16 -left-16 w-44 h-28 bg-gray-300 rounded-2xl shadow-xl"></div>
+        {/* Top Left Box */}
+        <div 
+          className={`absolute bg-gradient-to-br from-blue-100 via-cyan-50 to-teal-100 rounded-2xl shadow-2xl backdrop-blur-sm transition-all duration-[1800ms] ease-out ${
+            hasRevealed ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{
+            top: hasRevealed ? '64px' : '0',
+            left: hasRevealed ? '-120px' : '0',
+            width: hasRevealed ? '176px' : '50%',
+            height: hasRevealed ? '112px' : '50%',
+            transitionDelay: '200ms',
+            animation: hasRevealed ? 'floatTopLeft 9s ease-in-out infinite' : 'none',
+            animationDelay: '2s',
+          }}
+        ></div>
 
-              {/* Floating Card - Bottom Left */}
-              <div className="absolute -bottom-8 left-8 w-52 h-36 bg-gray-200 rounded-2xl shadow-xl"></div>
+        {/* Bottom Left Box */}
+        <div 
+          className={`absolute bg-gradient-to-br from-emerald-100 via-green-50 to-lime-100 rounded-2xl shadow-2xl backdrop-blur-sm transition-all duration-[1800ms] ease-out ${
+            hasRevealed ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{
+            bottom: hasRevealed ? '-32px' : '0',
+            left: hasRevealed ? '32px' : '0',
+            width: hasRevealed ? '208px' : '50%',
+            height: hasRevealed ? '144px' : '50%',
+            transitionDelay: '400ms',
+            animation: hasRevealed ? 'floatBottomLeft 10s ease-in-out infinite' : 'none',
+            animationDelay: '2.2s',
+          }}
+        ></div>
 
-              {/* Floating Card - Bottom Right */}
-              <div className="absolute -bottom-12 -right-12 w-56 h-40 bg-gray-300 rounded-2xl shadow-xl"></div>
-            </div>
-          </div>
+        {/* Bottom Right Box */}
+        <div 
+          className={`absolute bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 rounded-2xl shadow-2xl backdrop-blur-sm transition-all duration-[1800ms] ease-out ${
+            hasRevealed ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{
+            bottom: hasRevealed ? '-48px' : '0',
+            right: hasRevealed ? '-48px' : '0',
+            width: hasRevealed ? '224px' : '50%',
+            height: hasRevealed ? '160px' : '50%',
+            transitionDelay: '600ms',
+            animation: hasRevealed ? 'floatBottomRight 8.5s ease-in-out infinite' : 'none',
+            animationDelay: '2.4s',
+          }}
+        ></div>
+
+        {/* After reveal, show the actual floating cards */}
+        {hasRevealed && (
+          <>
+            {/* Floating Card - Top Right */}
+            <div 
+              className="absolute -top-8 -right-8 w-48 h-32 bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 rounded-2xl shadow-2xl backdrop-blur-sm opacity-0"
+              style={{
+                animation: 'fadeInFloat 1s ease-out forwards, floatTopRight 8s ease-in-out infinite',
+                animationDelay: '1.8s, 3s',
+              }}
+            ></div>
+
+            {/* Floating Card - Top Left */}
+            <div 
+              className="absolute top-16 -left-16 w-44 h-28 bg-gradient-to-br from-blue-100 via-cyan-50 to-teal-100 rounded-2xl shadow-2xl backdrop-blur-sm opacity-0"
+              style={{
+                animation: 'fadeInFloat 1s ease-out forwards, floatTopLeft 9s ease-in-out infinite',
+                animationDelay: '2s, 3.2s',
+              }}
+            ></div>
+
+            {/* Floating Card - Bottom Left */}
+            <div 
+              className="absolute -bottom-8 left-8 w-52 h-36 bg-gradient-to-br from-emerald-100 via-green-50 to-lime-100 rounded-2xl shadow-2xl backdrop-blur-sm opacity-0"
+              style={{
+                animation: 'fadeInFloat 1s ease-out forwards, floatBottomLeft 10s ease-in-out infinite',
+                animationDelay: '2.2s, 3.4s',
+              }}
+            ></div>
+
+            {/* Floating Card - Bottom Right */}
+            <div 
+              className="absolute -bottom-12 -right-12 w-56 h-40 bg-gradient-to-br from-amber-100 via-orange-50 to-yellow-100 rounded-2xl shadow-2xl backdrop-blur-sm opacity-0"
+              style={{
+                animation: 'fadeInFloat 1s ease-out forwards, floatBottomRight 8.5s ease-in-out infinite',
+                animationDelay: '2.4s, 3.6s',
+              }}
+            ></div>
+          </>
+        )}
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeInFloat {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 0.9;
+          }
+        }
+
+        @keyframes floatTopRight {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+          }
+          15% {
+            transform: translate(15px, -20px) rotate(5deg) scale(1.08);
+          }
+          30% {
+            transform: translate(-8px, -35px) rotate(-3deg) scale(1.05);
+          }
+          45% {
+            transform: translate(20px, -15px) rotate(6deg) scale(1.12);
+          }
+          60% {
+            transform: translate(-5px, -30px) rotate(-2deg) scale(1.06);
+          }
+          75% {
+            transform: translate(18px, -25px) rotate(4deg) scale(1.10);
+          }
+        }
+
+        @keyframes floatTopLeft {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+          }
+          20% {
+            transform: translate(-18px, 25px) rotate(-6deg) scale(1.10);
+          }
+          35% {
+            transform: translate(-30px, 12px) rotate(4deg) scale(1.07);
+          }
+          50% {
+            transform: translate(-12px, 32px) rotate(-5deg) scale(1.12);
+          }
+          70% {
+            transform: translate(-25px, 18px) rotate(3deg) scale(1.08);
+          }
+          85% {
+            transform: translate(-15px, 28px) rotate(-4deg) scale(1.11);
+          }
+        }
+
+        @keyframes floatBottomLeft {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+          }
+          18% {
+            transform: translate(-20px, -15px) rotate(4deg) scale(1.09);
+          }
+          35% {
+            transform: translate(12px, -28px) rotate(-5deg) scale(1.13);
+          }
+          52% {
+            transform: translate(-15px, -22px) rotate(6deg) scale(1.08);
+          }
+          68% {
+            transform: translate(8px, -32px) rotate(-3deg) scale(1.11);
+          }
+          85% {
+            transform: translate(-18px, -18px) rotate(5deg) scale(1.10);
+          }
+        }
+
+        @keyframes floatBottomRight {
+          0%, 100% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+          }
+          22% {
+            transform: translate(18px, 28px) rotate(-7deg) scale(1.12);
+          }
+          40% {
+            transform: translate(32px, 12px) rotate(5deg) scale(1.08);
+          }
+          58% {
+            transform: translate(12px, 35px) rotate(-4deg) scale(1.14);
+          }
+          72% {
+            transform: translate(28px, 18px) rotate(6deg) scale(1.09);
+          }
+          88% {
+            transform: translate(15px, 30px) rotate(-3deg) scale(1.13);
+          }
+        }
+      `}</style>
+    </div>
 
           {/* Mobile/Tablet Image */}
           <div className="relative lg:hidden">
             <div className="rounded-2xl overflow-hidden max-w-md mx-auto">
-              <img 
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=600&fit=crop" 
-                alt="Healthcare professional" 
-                className="w-full h-[400px] object-cover"
-              />
+              <Image 
+            src="/about-us.svg" 
+            alt="Healthcare professional" 
+            width={0}
+            height={350}
+            className="w-full object-cover"
+          />
             </div>
           </div>
         </div>
-      
+      <StatsSection />
     </section>
         </div>
+          
         </div>
+        <div className="max-w-6xl mx-auto px-4 md:px-0 py-20">
+        <div className="text-center w-full">
+             <div className="text-center max-w-4xl mx-auto pt-5 pb-5">
+                     <AnimatedBadge 
+              text="Meet the team" 
+              
+            />
+                <h2 className="text-[48px] leading-[120%] font-bold mt-8 mb-5 sm:mb-6">
+                     Minds Driving Healthcare Forward
+                      </h2>
+                      <motion.p initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }} className="text-[16px] tracking-[0.7px]"> A team of healthcare experts, technologists, and dreamers who believe that <br />innovation can save lives.</motion.p>
+                </div>
+                <TeamSection />
+                </div>
+                </div>
+                 <BottomCard 
+                    subhead="Be part of it."
+                    heading="The future of healthcare is being written today."
+                    paragraph={
+                        <>
+                        MedQR isn’t just software it’s your growth partner. Automate,<br /> streamline, and scale with confidence.
+                        </>
+                    }
+                    
+                   
+                    CTA1="Book a Demo"
+                    CTA2="Contact Us"
+                    />
         </div>
     );
     }
